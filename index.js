@@ -10,8 +10,9 @@ app.use(cors())
 app.use(express.json()) 
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :response-time ms - :res[content-length] :body - :req[content-length]'));
-app.use(express.static('build'))
 //To define a token, simply invoke morgan.token() with the name and a callback function. This callback function is expected to return a string value. The value returned is then available as ":type" in this case:
+app.use(express.static('build'))
+
 
 
 let persons = [
@@ -73,13 +74,13 @@ app.post('/api/persons', (request, response) => {
 
     if (!body.name) {
         return response.status(400).json({
-            error:'name missing'
+            err:'name missing'
         })
     }
 
     if (!body.number) {
         return response.status(400).json({
-            error:'number missing'
+            err:'number missing'
         })
     }
 
@@ -87,7 +88,7 @@ app.post('/api/persons', (request, response) => {
 
     if (names.includes(body.name)){
         return response.status(400).json({
-            error:'name must be unique'
+            err:'name must be unique'
         })
     }
 
@@ -98,7 +99,7 @@ app.post('/api/persons', (request, response) => {
     }
 
     persons = persons.concat(newperson)
-    response.json(persons)
+    response.json(newperson)
 })
 
 
